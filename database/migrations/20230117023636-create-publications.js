@@ -3,33 +3,59 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.createTable('Profiles', {
+      await queryInterface.createTable('publications', {
         id: {
           allowNull: false,
           defaultValue: Sequelize.UUIDV4,
           primaryKey: true,
           type: Sequelize.UUID
         },
-        user_id: {
+        profile_id: {
           type: Sequelize.UUID,
-          allowNull: false
+          allowNull: false,
+          foreignKey: true,
+          references: {
+            model: 'profiles',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'RESTRICT'
         },
-        role_id: {
+        publication_type_id: {
           type: Sequelize.INTEGER,
+          allowNull: false,
+          foreignKey: true,
+          references: {
+            model: 'publications_types',
+            key: 'id'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'RESTRICT'
+        },
+        title: {
+          type: Sequelize.STRING,
           allowNull: false
         },
-        image_url: {
+        description: {
           type: Sequelize.STRING
         },
-        codephone: {
-          type: Sequelize.INTEGER
+        content: {
+          type: Sequelize.STRING
         },
-        phone: {
-          type: Sequelize.INTEGER
+        picture: {
+          type: Sequelize.STRING
         },
-        country_id: {
+        city_id: {
           type: Sequelize.INTEGER,
-          allowNull: false
+          allowNull: false,
+          foreignKey: true,
+          references: {
+            model: 'city',
+            key: 'id'
+          }
+        },
+        imag_url: {
+          type: Sequelize.STRING
         },
         createdAt: {
           allowNull: false,
@@ -39,7 +65,7 @@ module.exports = {
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'created_at'
+          field: 'updatedcreated_at'
         }
       }, { transaction })
       await transaction.commit()
@@ -51,7 +77,7 @@ module.exports = {
   down: async (queryInterface, Sequelize) => {
     const transaction = await queryInterface.sequelize.transaction()
     try {
-      await queryInterface.dropTable('Profiles', { transaction })
+      await queryInterface.dropTable('publications', { transaction })
       await transaction.commit()
     } catch (error) {
       await transaction.rollback()
@@ -59,37 +85,45 @@ module.exports = {
     }
   }
 }
-/*
 
+
+
+/*
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 /*
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Profiles', {
+    await queryInterface.createTable('Publications', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      profile_id: {
         type: Sequelize.UUID
       },
-      role_id: {
+      publication_type_id: {
         type: Sequelize.INTEGER
       },
-      image_url: {
+      title: {
         type: Sequelize.STRING
       },
-      codephone: {
-        type: Sequelize.INTEGER
+      description: {
+        type: Sequelize.STRING
       },
-      phone: {
-        type: Sequelize.INTEGER
+      content: {
+        type: Sequelize.STRING
       },
-      country_id: {
-        type: Sequelize.INTEGER
+      picture: {
+        type: Sequelize.STRING
+      },
+      city_id: {
+        type: Sequelize.STRING
+      },
+      imag_url: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -102,9 +136,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Profiles');
+    await queryInterface.dropTable('Publications');
   }
 };
-
 */
-

@@ -81,6 +81,7 @@ module.exports = {
     }
   }
 }
+
 /*
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
