@@ -1,6 +1,12 @@
 const models = require('../database/models')
 const { Op } = require('sequelize')
 const { CustomError } = require('../utils/custom-error')
+const { v4: uuid4 } = require('uuid')
+
+//uuid  ^9.0.0
+// let uuidV4 = {
+//   id: uuid4()
+// }
 
 class UsersService {
 
@@ -36,7 +42,8 @@ class UsersService {
     try {
       let newUser = await models.Users.create({
         //id: uuid4() --> aquí se debe usar el uuid maker si es que se usa
-        name,
+        id: uuid4(),
+        name
       }, { transaction })
 
       await transaction.commit()

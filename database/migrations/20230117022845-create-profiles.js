@@ -52,12 +52,12 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'RESTRICT'
         },
-        createdAt: {
+        created_at: {
           allowNull: false,
           type: Sequelize.DATE,
           field: 'created_at'
         },
-        updatedAt: {
+        updated_at: {
           allowNull: false,
           type: Sequelize.DATE,
           field: 'updated_at'
