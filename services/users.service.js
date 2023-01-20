@@ -2,11 +2,8 @@ const models = require('../database/models')
 const { Op } = require('sequelize')
 const { CustomError } = require('../utils/custom-error')
 const { v4: uuid4 } = require('uuid')
-
-//uuid  ^9.0.0
-// let uuidV4 = {
-//   id: uuid4()
-// }
+const { hashPassword } = require('../utils/crypto')
+require('dotenv').config()
 
 class UsersService {
 
@@ -38,12 +35,20 @@ class UsersService {
   }
 
   async createUser({ name }) {
+    let { first_name, last_name, email, username, password } = name
+    //name = {first_name, last_name, email, username, password: hashPassword(password)}
     const transaction = await models.sequelize.transaction()
     try {
       let newUser = await models.Users.create({
         //id: uuid4() --> aquí se debe usar el uuid maker si es que se usa
         id: uuid4(),
-        name
+        first_name,
+        last_name,
+        email,
+        username,
+        password: hashPassword(password),
+        email_verified: new Date(),
+        token: ''
       }, { transaction })
 
       await transaction.commit()
@@ -56,6 +61,18 @@ class UsersService {
   //Return Instance if we do not converted to json (or raw:true)
   async getUserOr404(id) {
     let user = await models.Users.findByPk(id)
+
+    if (!user) throw new CustomError('Not found User', 404, 'Not Found')
+
+    return user
+  }
+
+  async getUserByEmail(email) {
+    let user = await models.Users.findOne({
+      where: {
+        email: email
+      }
+    })
 
     if (!user) throw new CustomError('Not found User', 404, 'Not Found')
 

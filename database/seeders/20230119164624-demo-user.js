@@ -1,5 +1,6 @@
 'use strict'
 const { v4: uuid4 } = require('uuid')
+const { hashPassword } = require('../utils/crypto')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -19,9 +20,9 @@ module.exports = {
       last_name: 'Helfer',
       email: 'eduardohelfer@gmx.net',
       username: 'ehelfer',
-      password: '12341234rewq',
+      password: hashPassword('12341234rewq'),
       email_verified: new Date(),
-      token: '12341234rewq',
+      token: '',
       created_at: new Date(),
       updated_at: new Date()
     },
@@ -31,9 +32,9 @@ module.exports = {
       last_name: 'Segura',
       email: 'oficialchala@gmail.com',
       username: 'nesa',
-      password: '12341234rewq',
+      password: hashPassword('12341234rewq'),
       email_verified: new Date(),
-      token: '12341234rewq',
+      token: '',
       created_at: new Date(),
       updated_at: new Date()
     }])
