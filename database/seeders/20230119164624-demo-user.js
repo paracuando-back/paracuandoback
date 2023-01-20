@@ -1,6 +1,6 @@
 'use strict'
 const { v4: uuid4 } = require('uuid')
-const { hashPassword } = require('../utils/crypto')
+const { hashPassword } = require('../../utils/crypto')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
