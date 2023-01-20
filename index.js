@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const helmet = require('helmet')
 require('dotenv').config()
+const routerModels = require('./routes/models.router')
 
 const app = express()
 const PORT = process.env.PORT || 8000
@@ -50,8 +51,17 @@ app.get('/', ({ res }) => {
   return res.json({
     status: 'Up',
     maintenance: false,
+    api: 'API Join Momentum',
+    state: 'Up and Running',
+    version: '1.0.0'
   })
 })
+
+// publicRouter(app)
+// docsRouter(app)
+// thirdPartyServicesRouter(app)
+routerModels(app) //Here we can add others
+// errorHandlerRouter(app)
 
 app.listen(PORT, () => {
   console.log(`Server on PORT: ${PORT}`)

@@ -40,3 +40,8 @@ const getPagingData = (data, page, limit) => {
   return { count, totalPages, currentPage, results }
 }
 
+module.exports = {
+  getPagination,
+  getPagingData
+}
+
