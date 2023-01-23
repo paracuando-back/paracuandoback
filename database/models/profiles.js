@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.UUID,
       allowNull: false,
-      foreignKey: true
+      unique: true
     },
     role_id: {
       type: DataTypes.INTEGER,

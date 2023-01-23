@@ -51,14 +51,12 @@ module.exports = {
           type: Sequelize.BIGINT  // Puede ser Integer o BigInt -> BigInt es mejor
         },
         */
-        createdAt: {
-          allowNull: false,
+        created_at: {
           type: Sequelize.DATE,
           field: 'created_at' // --> Asegurense de establecer el campo en snake_case aquí
           // o usando created_at en vez de createdAt en el Key
         },
-        updatedAt: {
-          allowNull: false,
+        updated_at: {
           type: Sequelize.DATE,
           field: 'updated_at'
         }

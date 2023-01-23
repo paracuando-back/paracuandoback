@@ -2,10 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 const {
-  getUsers,
-  getUser,
-  updateUser,
-  removeUser } = require('../controllers/users.controller')
+  addUser,
+} = require('../controllers/users.controller')
 
 /* Ejemplos
 const {
@@ -23,10 +21,6 @@ const {
 */
 //Solo cuiden la escalabilidad, esta son unas ideas
 
-router.get('/', /* isAnyRoleByList(['admin']), */getUsers)
-// router.post('/', addUser)
-router.get('/:id', /* isAdminOrSameUser, */getUser)
-router.put('/:id', /* isTheSameUser, */updateUser)
-router.delete('/:id', /* isAdminRole, */removeUser)
+router.post('/', addUser)
 
 module.exports = router
