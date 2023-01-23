@@ -18,9 +18,14 @@ class AuthService {
           email: email
         }
       })
+      let profile = await models.Profiles.findOne({
+        where: {
+          user_id: user.dataValues.id
+        }
+      })
       const verifyPassword = comparePassword(password, user.dataValues.password)
       if (verifyPassword) {
-        return user.dataValues
+        return {user_data: user.dataValues, profile_data: profile.dataValues}
       }
       return null
     } catch (error) {

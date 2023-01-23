@@ -28,12 +28,8 @@ const addUser = async(request, response, next) => {
   try {
     let body = request.body
     let user = await usersService.createUser(body)
-    console.log(user.dataValues)
-    
     body.user_id=user.dataValues.id
-    console.log(body)
     let profile = await usersService.createProfile(body)
-    console.log(profile.dataValues)
     await mailer.sendMail({
       from: `<${process.env.MAIL_USER}>`,
       to: user.email,

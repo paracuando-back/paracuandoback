@@ -12,14 +12,15 @@ const postLogin = async (req, res) => {
   const { email, password } = req.body
   if (email && password) {
     authService.checkUsersCredentials(email, password)
-      .then((data) => {
-        if (data) {
+      .then(({user_data, profile_data}) => {
+        if (user_data) {
           const token = jwt.sign({
-            id: data.id,
-            email: data.email
+            id: user_data.id,
+            email: user_data.email,
+            role: profile_data.role
           }, jwtSecret)
-          data.token = token
-          usersService.updateUser(data.id, data)
+          user_data.token = token
+          usersService.updateUser(user_data.id, user_data)
           res.status(200).json({
             message: 'Correct Credentials.  Here is your JWT token:',
             token
