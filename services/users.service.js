@@ -31,6 +31,10 @@ class UsersService {
     options.distinct = true
 
     const users = await models.Users.findAndCountAll(options)
+    for(let i=0; i<users.rows.length; i++) {
+      delete users.rows[i].dataValues.token
+      delete users.rows[i].dataValues.password
+    }
     return users
   }
 
@@ -81,7 +85,9 @@ class UsersService {
   //Return Instance if we do not converted to json (or raw:true)
   async getUserOr404(id) {
     let user = await models.Users.findByPk(id)
-
+    delete user.dataValues.token
+    delete user.dataValues.password
+    console.log(user.dataValues)
     if (!user) throw new CustomError('Not found User', 404, 'Not Found')
 
     return user
@@ -102,6 +108,7 @@ class UsersService {
   //Return not an Instance raw:true | we also can converted to Json instead
   async getUser(id) {
     let user = await models.Users.findByPk(id, { raw: true })
+
     return user
   }
 

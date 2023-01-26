@@ -17,7 +17,7 @@ const postLogin = async (req, res) => {
           const token = jwt.sign({
             id: user_data.id,
             email: user_data.email,
-            role: profile_data.role
+            role: profile_data.role_id
           }, jwtSecret)
           user_data.token = token
           usersService.updateUser(user_data.id, user_data)
@@ -42,6 +42,18 @@ const postLogin = async (req, res) => {
   }
 }
 
+const getUserInfo = async (request, response, next) => {
+  try {
+    let { id } = request.body
+    let user = await authService.findUserInfo(id)
+    return response.json(user)
+    // return response.json({ results: user })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  postLogin
+  postLogin,
+  getUserInfo
 }

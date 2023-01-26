@@ -33,6 +33,21 @@ class AuthService {
     }
   }
 
-}
+  async findUserInfo(user_id) {
+    const data = await models.Users.findAll({
+      where: {
+        id: user_id
+      },
+      include: 
+      {
+        model: models.Profiles,
+        as: 'profile',
+        attributes: ['id', 'role_id', 'image_url', 'codephone', 'phone', 'country_id']
+      },
+      attributes: ['id', 'first_name', 'last_name', 'username', 'email']
+    })
+    return data
+  }
+}  
 
 module.exports = AuthService

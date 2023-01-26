@@ -20,7 +20,6 @@ const corsOptions = {
     }
   }
 }
-console.log(corsOptions.NODE_ENV)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(cors())
